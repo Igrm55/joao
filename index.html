@@ -90,6 +90,7 @@
             z-index: 10000;
             text-align: center;
             transition: opacity 0.8s ease-out;
+            padding: 1rem;
         }
 
         #interactive-intro.revealed #intro-content {
@@ -135,10 +136,10 @@
             align-items: center;
             text-align: center;
             flex-direction: column;
+            /* IMPROVEMENT: Removed background-attachment:fixed for better mobile performance */
             background-image: linear-gradient(rgba(8, 18, 16, 0.8), rgba(8, 18, 16, 1)), url('https://i.postimg.cc/HWhTy8nD/275e1d40-1d57-4e38-86eb-06f1cad52899.jpg');
             background-size: cover;
             background-position: center 30%;
-            background-attachment: fixed;
             padding: 1rem;
             overflow: hidden;
         }
@@ -402,6 +403,7 @@
             border: 3px solid var(--gold);
         }
 
+        /* IMPROVEMENT: Refined blink effect for image transitions */
         #lightbox-blink-effect {
             position: absolute;
             top: 0;
@@ -535,7 +537,7 @@
             100% { transform: scale(1); }
         }
 
-        /* --- Responsive Design --- */
+        /* --- Responsive Design Improvements --- */
         @media screen and (max-width: 768px) {
             .timeline::after { left: 31px; }
             .timeline-container { width: 100%; padding-left: 70px; padding-right: 25px; }
@@ -543,6 +545,17 @@
             .left::after, .right::after { left: 18px; }
             .right { left: 0%; }
         }
+        
+        /* IMPROVEMENT: Specific styles for landscape mobile (projection) */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content h2 { font-size: 1.2rem; }
+            .scroll-down { display: none; }
+            .section { padding: 60px 5%; }
+            .section-title { font-size: 2rem; }
+            .section-subtitle { font-size: 1rem; margin-bottom: 3rem;}
+        }
+
     </style>
 </head>
 <body>
@@ -670,22 +683,19 @@
             discoverBtn.addEventListener('click', () => {
                 introScreen.classList.add('revealed');
                 
-                // After the transition starts, make the main content visible and allow scrolling
                 setTimeout(() => {
                     mainContent.style.visibility = 'visible';
                     document.body.style.overflow = 'auto';
-                }, 500); // Should be less than the transition duration
+                }, 500);
                 
-                // After the transition ends, hide the intro screen
                 setTimeout(() => {
                     introScreen.style.display = 'none';
-                     // Initialize AOS after the intro is gone, so animations trigger on scroll
                     AOS.init({
                         duration: 800,
                         once: true,
                         offset: 50,
                     });
-                }, 2500); // Matches the curtain transition time + a small buffer
+                }, 2500);
             });
 
             // --- Image Gallery and Lightbox Logic ---
