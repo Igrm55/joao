@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homenagem a João Regis Aragão de Moura</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Fauna+One&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- AOS Library for Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --dark-green: #081210;
+            --gold: #D4AF37;
+            --light-gold: #f3e9d2;
+            --off-white: #f5f5f5;
+            --font-headings: 'Cinzel Decorative', serif;
+            --font-body: 'Fauna One', serif;
+            --font-cursive: 'Dancing Script', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark-green);
+            color: var(--off-white);
+            font-family: var(--font-body);
+            overflow: hidden; /* Prevent scrolling until intro is done */
+        }
+        
+        /* --- Interactive Intro Screen --- */
+        #interactive-intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .curtain {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background-color: var(--dark-green);
+            transition: transform 2s cubic-bezier(0.77, 0, 0.175, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #left-curtain {
+            left: 0;
+        }
+        
+        #right-curtain {
+            right: 0;
+        }
+        
+        #interactive-intro.revealed #left-curtain {
+            transform: translateX(-100%);
+        }
+        
+        #interactive-intro.revealed #right-curtain {
+            transform: translateX(100%);
+        }
+
+        #intro-content {
+            z-index: 10000;
+            text-align: center;
+            transition: opacity 0.8s ease-out;
+        }
+
+        #interactive-intro.revealed #intro-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #discover-btn {
+            background-color: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 1rem 2.5rem;
+            font-family: var(--font-headings);
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s, color 0.3s;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        #discover-btn:hover {
+            transform: scale(1.05);
+            background-color: var(--gold);
+            color: var(--dark-green);
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.5);
+        }
+        
+        .intro-title {
+            color: var(--off-white);
+            font-family: var(--font-body);
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        /* --- Header & Hero Section --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            background-image: linear-gradient(rgba(8, 18, 16, 0.8), rgba(8, 18, 16, 1)), url('https://i.postimg.cc/HWhTy8nD/275e1d40-1d57-4e38-86eb-06f1cad52899.jpg');
+            background-size: cover;
+            background-position: center 30%;
+            background-attachment: fixed;
+            padding: 1rem;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0) 70%);
+            animation: pulse-light 5s infinite;
+        }
+
+        @keyframes pulse-light {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.5); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+
+        .hero-content {
+            opacity: 0;
+            animation: fadeInContent 2s forwards 1.5s;
+        }
+
+        @keyframes fadeInContent {
+            to { opacity: 1; }
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-headings);
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 3px 3px 15px rgba(0,0,0,0.7);
+        }
+
+        .hero-content h2 {
+            font-family: var(--font-body);
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            color: var(--off-white);
+            margin-top: 1rem;
+            font-weight: 400;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            color: var(--gold);
+            font-size: 2.5rem;
+            animation: bounce 2s infinite 2s;
+            opacity: 0;
+            animation: fadeInContent 2s forwards 2.5s, bounce 2s infinite 4.5s;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* --- General Section Styling --- */
+        .section {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-family: var(--font-headings);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--gold);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--light-gold);
+            margin-bottom: 5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        /* --- Timeline Section --- */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: rgba(212, 175, 55, 0.2);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-container::after {
+            content: '\f005'; /* Star icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: var(--dark-green);
+            color: var(--gold);
+            font-size: 1.2rem;
+            line-height: 25px;
+            text-align: center;
+            border: 2px solid var(--gold);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .timeline-container:hover::after {
+            transform: scale(1.2) rotate(360deg);
+            color: var(--off-white);
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        .left::before, .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            border: medium solid var(--light-gold);
+        }
+
+        .left::before {
+            right: 30px;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--light-gold);
+        }
+
+        .right::before {
+            left: 30px;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--light-gold) transparent transparent;
+        }
+
+        .right::after { left: -13px; }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--light-gold);
+            color: var(--dark-green);
+            position: relative;
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease;
+        }
+        .timeline-content:hover {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+        }
+        
+        .timeline-content h3 {
+            font-family: var(--font-headings);
+            color: var(--dark-green);
+            font-size: 1.5rem;
+        }
+        
+        .timeline-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 0.5rem;
+        }
+
+        /* --- Gallery Section --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            cursor: pointer;
+            aspect-ratio: 1 / 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* --- Lightbox Modal --- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding: 50px 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0,0,0,0.95);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 80vw;
+            max-height: 85vh;
+            animation: zoom 0.6s;
+            position: relative;
+            z-index: 1002;
+            border-radius: 5px;
+            border: 3px solid var(--gold);
+        }
+
+        #lightbox-blink-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        #lightbox-blink-effect.active {
+            opacity: 1;
+        }
+        
+        @keyframes zoom { from { transform:scale(0) } to { transform:scale(1) } }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 1003;
+        }
+
+        .close-lightbox:hover, .close-lightbox:focus {
+            color: #bbb;
+            text-decoration: none;
+            transform: rotate(90deg);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 1rem;
+            z-index: 1003;
+        }
+        
+        .lightbox-prev, .lightbox-next {
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            font-size: 3rem;
+            user-select: none;
+            transition: 0.3s;
+            background-color: rgba(0,0,0,0.3);
+            padding: 0 1.5rem;
+            border-radius: 5px;
+        }
+        .lightbox-prev:hover, .lightbox-next:hover {
+            background-color: rgba(212, 175, 55, 0.5);
+        }
+
+        /* --- Mural de Carinho Section --- */
+        .mural-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .mural-card {
+            background-color: var(--light-gold);
+            color: var(--dark-green);
+            padding: 2.5rem 2rem;
+            border-radius: 8px;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .mural-card:nth-child(even) { transform: rotate(2deg); }
+        .mural-card:hover {
+            transform: rotate(0) scale(1.05);
+            z-index: 2;
+        }
+        
+        .mural-card .pin {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            color: #d9534f;
+        }
+
+        .mural-card p {
+            font-family: var(--font-cursive);
+            font-size: 1.9rem;
+            line-height: 1.7;
+            margin-top: 1rem;
+        }
+        
+        .mural-card .author {
+            text-align: right;
+            margin-top: 1rem;
+            font-family: var(--font-body);
+            font-style: italic;
+        }
+        
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #050c0b;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            font-size: 1.1rem;
+            color: var(--gold);
+        }
+        footer .heart {
+            color: #e74c3c;
+            animation: pulse-heart 1.5s infinite;
+        }
+        
+        @keyframes pulse-heart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- Responsive Design --- */
+        @media screen and (max-width: 768px) {
+            .timeline::after { left: 31px; }
+            .timeline-container { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-container::before { left: 60px; border-width: 10px 10px 10px 0; border-color: transparent var(--light-gold) transparent transparent; }
+            .left::after, .right::after { left: 18px; }
+            .right { left: 0%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="interactive-intro">
+        <div id="left-curtain" class="curtain"></div>
+        <div id="right-curtain" class="curtain"></div>
+        <div id="intro-content">
+            <p class="intro-title">Uma homenagem ao nosso pilar, nossa inspiração.</p>
+            <button id="discover-btn">Descobrir a Homenagem</button>
+        </div>
+    </div>
+    
+    <div id="main-site-content" style="visibility: hidden;">
+        <header class="hero">
+            <div class="hero-content">
+                <h1>João Regis Aragão de Moura</h1>
+                <h2>68 anos tecendo um legado de força, amor e inspiração.</h2>
+            </div>
+            <a href="#biography" class="scroll-down">
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+        </header>
+
+        <main>
+            <section id="biography" class="section">
+                <h2 class="section-title" data-aos="fade-up">A Saga de um Homem Extraordinário</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                    Há homens que constroem casas, e há homens que constroem lares. Há homens que buscam o sucesso, e há homens que são o próprio sucesso na vida daqueles que amam. Você, para nós, é a segunda opção. Esta é a nossa mais sincera e emocionada tentativa de honrar a sua jornada, que não se mede em anos, mas em vidas tocadas, em exemplos semeados e em um amor que floresce em todos nós.
+                </p>
+                <div class="timeline">
+                    <div class="timeline-container left" data-aos="fade-right">
+                        <div class="timeline-content">
+                            <h3>O Início da Jornada</h3>
+                            <p>No dia 16 de Junho de 1957, o mundo recebia um novo brilho. Uma alma destinada a ser forte, a ser esteio. Uma história de trabalho, inspiração, e um amor incondicional estava apenas começando.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container right" data-aos="fade-left">
+                        <div class="timeline-content">
+                            <h3>Mãos que Constroem</h3>
+                            <p>Desde muito cedo, a sua garra era evidente. Menino ainda, vendeu picolé, entregou jornal, e com seu suor, pavimentou o caminho para se tornar um mestre soldador. Deixou sua marca de excelência na Petrobras, Odebrecht, Mendes Júnior, entre tantas outras, não apenas erguendo estruturas de metal, mas nos ensinando que a maior construção é a da própria dignidade.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container left" data-aos="fade-right">
+                        <div class="timeline-content">
+                            <h3>O Coração que Serve</h3>
+                            <p>Aposentado no papel, mas incansável de espírito. Sua energia parece infinita, mas sabemos seu segredo: ela é para os outros. Ainda ecoa em nossos corações a voz da sua eterna companheira, nossa amada Elizabete (em memória), dizendo com um misto de carinho e resignação: “Venha comer, João, que a comida vai esfriar!”. Mas você nunca ia. Sempre havia um parafuso para apertar, um problema para resolver, alguém para ajudar. Essa é a sua essência: doar-se sem medida.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container right" data-aos="fade-left">
+                        <div class="timeline-content">
+                            <h3>O Pilar de Todos Nós</h3>
+                            <p>Esta é a sua maior e mais bela obra. Um alicerce invisível, mas indestrutível. Você transcende todos os papéis: avô, irmão, tio, amigo. Você é um PAI, no sentido mais puro da palavra, na vida de todos ao seu redor. Um farol de segurança e o porto seguro para onde nossas almas sempre podem retornar, não importa a tempestade.</p>
+                        </div>
+                    </div>
+                     <div class="timeline-container left" data-aos="fade-right">
+                        <div class="timeline-content">
+                            <h3>Hoje: O Legado Vivo</h3>
+                            <p>Aos 68 anos, não celebramos apenas um aniversário. Celebramos o homem. A lenda. Celebramos sua teimosia em fazer o bem, sua sabedoria que não vem dos livros, mas da vida, e seu coração gigante que parece não conhecer limites. Obrigado por ser nosso norte e por nos ensinar a sermos melhores. O seu legado não está em paredes, está em nós.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gallery" class="section">
+                <h2 class="section-title" data-aos="fade-up">Mosaico de Afetos</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                    Se cada foto contasse uma história, esta galeria seria a nossa mais bela biblioteca. Um arquivo de sorrisos, abraços e momentos que compõem a melodia da nossa família. Cada clique é um convite para reviver a felicidade.
+                </p>
+                <div class="gallery-grid" data-aos="zoom-in-up">
+                    <!-- As imagens serão inseridas aqui via JavaScript -->
+                </div>
+            </section>
+
+            <section id="mural" class="section">
+                <h2 class="section-title" data-aos="fade-up">Cartas do Coração</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                    Se o nosso amor e gratidão pudessem ser traduzidos em palavras, ainda assim seriam insuficientes. Aqui, deixamos fragmentos da nossa alma, mensagens que tentam tocar a grandeza da sua.
+                </p>
+                <div class="mural-grid">
+                    <div class="mural-card" data-aos="fade-up">
+                        <div class="pin"><i class="fa-solid fa-thumbtack"></i></div>
+                        <p>"Seu maior legado não está no que você construiu com as mãos, mas em quem você nos inspira a sermos todos os dias. Temos um orgulho que transborda em lágrimas de alegria por sermos sua família."</p>
+                        <p class="author">- Com todo o nosso amor</p>
+                    </div>
+                     <div class="mural-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="pin"><i class="fa-solid fa-thumbtack"></i></div>
+                        <p>"Suas histórias são as nossas melhores lições, elas nos ensinam sobre a vida, a honra e a coragem. Obrigado por ser nosso guia e por nos ensinar a sermos melhores, sempre."</p>
+                        <p class="author">- Seus filhos e netos de coração</p>
+                    </div>
+                     <div class="mural-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="pin"><i class="fa-solid fa-thumbtack"></i></div>
+                        <p>"Seu coração generoso e sua bondade são a prova de que os verdadeiros heróis andam entre nós. Amamos você com uma força que palavras não podem descrever."</p>
+                        <p class="author">- Todos que te amam</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Feito com todo amor e carinho <span class="heart">❤</span></p>
+            <p>pela sua família.</p>
+        </footer>
+    </div>
+
+    <!-- Lightbox Modal HTML -->
+    <div id="lightbox-modal" class="lightbox">
+        <div id="lightbox-blink-effect"></div>
+        <span class="close-lightbox">&times;</span>
+        <div class="lightbox-nav">
+            <a class="lightbox-prev">&#10094;</a>
+            <a class="lightbox-next">&#10095;</a>
+        </div>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const discoverBtn = document.getElementById('discover-btn');
+            const introScreen = document.getElementById('interactive-intro');
+            const mainContent = document.getElementById('main-site-content');
+
+            discoverBtn.addEventListener('click', () => {
+                introScreen.classList.add('revealed');
+                
+                // After the transition starts, make the main content visible and allow scrolling
+                setTimeout(() => {
+                    mainContent.style.visibility = 'visible';
+                    document.body.style.overflow = 'auto';
+                }, 500); // Should be less than the transition duration
+                
+                // After the transition ends, hide the intro screen
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                     // Initialize AOS after the intro is gone, so animations trigger on scroll
+                    AOS.init({
+                        duration: 800,
+                        once: true,
+                        offset: 50,
+                    });
+                }, 2500); // Matches the curtain transition time + a small buffer
+            });
+
+            // --- Image Gallery and Lightbox Logic ---
+            const galleryGrid = document.querySelector('.gallery-grid');
+            const lightbox = document.getElementById('lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.querySelector('.close-lightbox');
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            const blinkEffect = document.getElementById('lightbox-blink-effect');
+
+            let imageUrls = [
+                'https://i.postimg.cc/1XjRRfnS/04936d60-1035-4387-b802-107f835a591c.jpg', 'https://i.postimg.cc/BbHs3M0T/01f85a15-d205-4013-ab59-836bbbc8aceb.jpg', 'https://i.postimg.cc/g26jJqHT/08be2770-9204-4ad1-bda9-053f1bf4085d.jpg', 'https://i.postimg.cc/MKfqbZfc/0c480d22-5c22-4e76-ab54-1e852ef33632.jpg', 'https://i.postimg.cc/bJGpCqVF/0d95ac63-52d4-4253-b898-6ec91287950e.jpg', 'https://i.postimg.cc/JhFWB973/0dd16502-2cf7-4f68-b6e9-25dd3bb2f22a.jpg', 'https://i.postimg.cc/KY2GYXz1/0f13a175-c2e5-4e18-a45d-359267d12cdd.jpg', 'https://i.postimg.cc/3xnh3kPc/15ac8d98-942f-4a75-b815-aa479f1411e0.jpg', 'https://i.postimg.cc/G2bmX0wW/1840a032-e94d-45fa-a3d2-1d4ef9cd0678.jpg', 'https://i.postimg.cc/T1z8Hm5K/189dc491-ed59-414c-9c29-f375cce1930a.jpg', 'https://i.postimg.cc/nh8Zd8q3/1be8f9fa-9e0e-466e-926b-eed7a088d08c.jpg', 'https://i.postimg.cc/sgpzqncs/1e4f1c6d-dc57-446c-aec8-b9afca2e815e.jpg', 'https://i.postimg.cc/SKRhRy4N/25491792-068e-4302-b554-471f9bd6e03d.jpg', 'https://i.postimg.cc/FFWHVnP6/267b88fd-e323-4f49-a048-21518e8372a1.jpg', 'https://i.postimg.cc/HWhTy8nD/275e1d40-1d57-4e38-86eb-06f1cad52899.jpg', 'https://i.postimg.cc/mkFJMDpB/3222c6d1-d8fc-4516-8393-b97fc6043283.jpg', 'https://i.postimg.cc/7YN8NCYZ/3d80abf6-eb58-4c3a-a5fd-5166a13704b8.jpg', 'https://i.postimg.cc/HkHWYDjV/3ff6945d-1f15-4dbd-a168-1a6676a99aea.jpg', 'https://i.postimg.cc/Jn09rKby/468cd3de-6f0a-4a01-b04a-7c87e3a14620.jpg', 'https://i.postimg.cc/B6vG8JGn/4c624488-8cc6-4066-bd8c-9a32b872c6d5.jpg', 'https://i.postimg.cc/zBd8pVkh/58ef3612-4f3a-492d-aa52-de951e97ceb0.jpg', 'https://i.postimg.cc/cCRq2CRT/5a4f5630-b437-4fdc-9add-d39051eb13c6.jpg', 'https://i.postimg.cc/kgcJD1tw/68a14fee-51ba-4d13-b34f-e8032182d247.jpg', 'https://i.postimg.cc/RVmxf1mY/69246bb9-d3f5-4eda-9d97-e12881850b66.jpg', 'https://i.postimg.cc/FsSXkPw3/69781a7a-41f9-45e2-bd1f-59d4cde06526.jpg', 'https://i.postimg.cc/cCrZz0Db/6d151ae4-bd27-4111-8ff6-e1f4174785b7.jpg', 'https://i.postimg.cc/TYjGH7QG/6f19d08c-001e-4ed6-8589-09ac66ecbed0.jpg', 'https://i.postimg.cc/d1fgLdB5/6f7d37f9-b61a-4264-97f5-b52b19a897d0.jpg', 'https://i.postimg.cc/hj4K99Vg/710ceeb8-a1e8-44b9-85ea-ba4891c5454d.jpg', 'https://i.postimg.cc/nLpxJvR7/739837d2-c8db-4998-8e8f-c43f9d870ff1.jpg', 'https://i.postimg.cc/1z9kTyXr/758892a3-efcb-4497-9195-bcb2e64b865c.jpg', 'https://i.postimg.cc/3rVHRMf3/79f78c3e-0568-46e9-940f-7d22030e1906.jpg', 'https://i.postimg.cc/76pDjjpP/7b31a9d9-70be-40c6-9b41-c972b16b8324.jpg', 'https://i.postimg.cc/qvnB0Bkf/7f1a4983-870c-4b41-94dc-72029e811f0c.jpg', 'https://i.postimg.cc/8P7PKB9z/7f497913-dcd9-4666-8b2c-b96317eb4d10.jpg', 'https://i.postimg.cc/L4c6WZpk/7f57ec5e-6e35-4ed1-9f71-a8eadc22f543.jpg', 'https://i.postimg.cc/d0VqC22F/8aae788f-b24a-4f43-9eb7-3cae86a6dfb6.jpg', 'https://i.postimg.cc/4NymCT7Z/9283d47f-f2c9-4ad1-bd27-86bedc073569.jpg', 'https://i.postimg.cc/Bb99mHKX/9c685c90-5c35-4749-aa41-8100b9158d62.jpg', 'https://i.postimg.cc/vH5HwHYJ/9d670414-b935-46a4-a423-1ffb3524dcf6.jpg', 'https://i.postimg.cc/bwz8XxFn/b77ce1a9-0bcc-40a2-be12-1a07cf15076b.jpg', 'https://i.postimg.cc/dtcw6P24/bc595a92-98a4-4691-9ddb-baeb2e89e123.jpg', 'https://i.postimg.cc/JzWVNNWg/bf7ed659-b105-4a41-b916-858fea2598e7.jpg', 'https://i.postimg.cc/cJyH8gD4/bfdafbda-be6f-410a-8083-58b13bb82b47.jpg', 'https://i.postimg.cc/MZQz1KQn/c07d5132-13a8-4b2b-baa9-341179d7c306.jpg', 'https://i.postimg.cc/JzcwPsrh/c14a7e0a-61f3-4f64-8f73-81abe94b6b98.jpg', 'https://i.postimg.cc/Pfp5KQBr/c35a9b5b-f073-41e8-b18c-661fd89c5d4c.jpg', 'https://i.postimg.cc/wB0CYns8/cb4d143b-2e8a-4c1b-8cfd-99621d3ac38b.jpg', 'https://i.postimg.cc/sf7Rv6kS/dc03bbb8-bb1b-4e82-a74f-3e73156d2fce.jpg', 'https://i.postimg.cc/x1swWWmr/df2a5cfe-bbd2-4be0-b780-03f140fb9b8a.jpg', 'https://i.postimg.cc/7hdD8ddY/ecc363b4-dc59-4629-a6a2-7907328fb25d.jpg', 'https://i.postimg.cc/BQzt4wHF/eee1c33e-fa6e-4ebe-a48c-5911f1c84762.jpg', 'https://i.postimg.cc/VvrQR4vy/f0ade800-aead-42cd-904c-3568e3345415.jpg', 'https://i.postimg.cc/4dwNM8Xm/f3dd8884-024f-4fcd-8019-88d9bca39a9d.jpg', 'https://i.postimg.cc/N0Dcf5Sn/fab579c3-fcc2-40ff-b825-07b742159872.jpg', 'https://i.postimg.cc/cCH4NQJT/fee991df-d36d-4c9f-8a86-772a8eae0b57.jpg', 'https://i.postimg.cc/50ZnbB51/db56f5ad-b560-48da-b95f-29fc6e36beea.jpg', 'https://i.postimg.cc/0NYNGk3G/9c5cf0bf-7f7c-441a-a1c8-096a0e0c5ae1.jpg', 'https://i.postimg.cc/WbmXcJdL/6eff8092-eedf-48b2-ab8b-b4c91f0cbf62.jpg', 'https://i.postimg.cc/28N2tx87/be4e8b66-075d-467d-8863-6efce8ead8bb.jpg'
+            ];
+
+            let galleryItems = [];
+            let currentIndex = 0;
+            let isTransitioning = false;
+
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+            shuffle(imageUrls);
+
+            imageUrls.forEach((url, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.setAttribute('data-aos', 'zoom-in');
+                item.setAttribute('data-aos-delay', (index % 4) * 100);
+
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = `Memória da Família ${index + 1}`;
+                img.onerror = function() {
+                    this.onerror=null;
+                    this.src='https://placehold.co/400x400/0a1412/D4AF37?text=Erro+ao+Carregar';
+                };
+                
+                item.appendChild(img);
+                galleryGrid.appendChild(item);
+                
+                galleryItems.push({ element: item, src: url });
+
+                item.addEventListener('click', () => openLightbox(index));
+            });
+
+            function showImage(index) {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                blinkEffect.classList.add('active');
+                setTimeout(() => {
+                    lightboxImg.src = galleryItems[index].src;
+                    const nextIndex = (index + 1) % galleryItems.length;
+                    const prevIndex = (index - 1 + galleryItems.length) % galleryItems.length;
+                    new Image().src = galleryItems[nextIndex].src;
+                    new Image().src = galleryItems[prevIndex].src;
+                    setTimeout(() => {
+                         blinkEffect.classList.remove('active');
+                         isTransitioning = false;
+                    }, 100);
+                }, 300);
+            }
+
+            function openLightbox(index) {
+                currentIndex = index;
+                lightbox.style.display = 'flex';
+                showImage(currentIndex);
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            function showNext() { currentIndex = (currentIndex + 1) % galleryItems.length; showImage(currentIndex); }
+            function showPrev() { currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length; showImage(currentIndex); }
+
+            closeBtn.addEventListener('click', closeLightbox);
+            nextBtn.addEventListener('click', showNext);
+            prevBtn.addEventListener('click', showPrev);
+
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display !== 'flex') return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') showNext();
+                if (e.key === 'ArrowLeft') showPrev();
+            });
+        });
+    </script>
+</body>
+</html>
